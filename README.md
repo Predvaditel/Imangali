@@ -1,2 +1,147 @@
 # Imangali
 not IT student
+
+import turtle as t
+import os
+
+
+player_a_score = 0
+player_b_score = 0
+
+win = t.Screen()
+win.title("Ping-Pong")
+win.bgcolor('darkgreen')
+win.setup(width=800,height=600)
+win.tracer(0)
+
+
+
+paddle_left = t.Turtle()
+paddle_left.speed(0)
+paddle_left.shape('square')
+paddle_left.color('midnightblue')
+paddle_left.shapesize(stretch_wid=5,stretch_len=1)
+paddle_left.penup()
+paddle_left.goto(-350,0)
+
+
+
+paddle_right = t.Turtle()
+paddle_right.speed(0)
+paddle_right.shape('square')
+paddle_right.shapesize(stretch_wid=5,stretch_len=1)
+paddle_right.color('midnightblue')
+paddle_right.penup()
+paddle_right.goto(350,0)
+
+
+
+ball = t.Turtle()
+ball.speed(0)
+ball.shape('square')
+ball.color('white')
+ball.penup()
+ball.goto(5,5)
+ball_dx = 0.2
+ball_dy = 0.2
+
+
+
+pen = t.Turtle()
+pen.speed(0)
+pen.color('black')
+pen.penup()
+pen.hideturtle()
+pen.goto(0,260)
+pen.write("score" , align = "center" , font = ('Times',20,'normal'))
+
+
+
+def paddle_left_up():
+    y = paddle_left.ycor()
+    y = y + 90
+    paddle_left.sety(y)
+
+
+
+def paddle_left_down():
+    y = paddle_left.ycor()
+    y = y - 90
+    paddle_left.sety(y)
+
+
+
+def paddle_right_up():
+    y = paddle_right.ycor()
+    y = y + 90
+    paddle_right.sety(y)
+
+
+
+def paddle_right_down():
+    y = paddle_right.ycor()
+    y = y - 90
+    paddle_right.sety(y)
+
+
+
+win.listen()
+win.onkeypress(paddle_left_up,"w")
+win.onkeypress(paddle_left_down,"s")
+win.onkeypress(paddle_right_up,"Up")
+win.onkeypress(paddle_right_down,"Down")
+
+
+
+
+
+
+while True:
+    win.update()
+
+
+    ball.setx(ball.xcor() + ball_dx)
+    ball.sety(ball.ycor() + ball_dy)
+
+
+
+    if ball.ycor() > 290:
+        ball.sety(290)
+        ball_dy = ball_dy * -1
+
+
+    if ball.ycor() < -290:
+        ball.sety(-290)
+        ball_dy = ball_dy * -1
+
+
+    if ball.xcor() > 390:
+        ball.goto(0,0)
+        ball_dx = ball_dx * -1
+        player_a_score = player_a_score + 1
+        pen.clear()
+        pen.write("Player A: {}                    Player B: {} ".format(player_a_score,player_b_score),align="center",font=('Times',20,"normal"))
+        os.system("afplay wallhit.wav&")
+
+
+
+    if(ball.xcor()) < -390:
+        ball.goto(0,0)
+        ball_dx = ball_dx * -1
+        player_b_score = player_b_score + 1
+        pen.clear()
+        pen.write("Player A: {}                    Player B: {} ".format(player_a_score,player_b_score),align="center",font=('Times',20,"normal"))
+        os.system("afplay wallhit.wav&")
+
+
+
+
+    if(ball.xcor() > 340) and (ball.xcor() < 350) and (ball.ycor() < paddle_right.ycor() + 40 and ball.ycor() > paddle_right.ycor() - 40):
+        ball.setx(340)
+        ball_dx = ball_dx * -1
+        os.system("afplay paddle.wav&")
+
+    if(ball.xcor() < -340) and (ball.xcor() > -350) and (ball.ycor() < paddle_left.ycor() + 40 and ball.ycor() > paddle_left.ycor() - 40):
+        ball.setx(-340)
+        ball_dx = ball_dx * -1
+        os.system("afplay paddle.wav&")
