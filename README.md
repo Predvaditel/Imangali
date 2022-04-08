@@ -1,0 +1,2 @@
+# Imangali
+not IT student
