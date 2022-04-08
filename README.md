@@ -1,6 +1,9 @@
 # Imangali
 not IT student
 
+
+
+
 import turtle as t
 import os
 
@@ -91,14 +94,8 @@ win.onkeypress(paddle_left_down,"s")
 win.onkeypress(paddle_right_up,"Up")
 win.onkeypress(paddle_right_down,"Down")
 
-
-
-
-
-
 while True:
     win.update()
-
 
     ball.setx(ball.xcor() + ball_dx)
     ball.sety(ball.ycor() + ball_dy)
